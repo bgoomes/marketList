@@ -1,73 +1,87 @@
-# React + TypeScript + Vite
+# Lista Mercado 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicativo de lista de compras mobile-first construído com React, TypeScript e Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 18** - Biblioteca UI
+- **TypeScript** - Tipagem estática
+- **Vite** - Build tool rápida
+- **Tailwind CSS** - Estilização utilitária
+- **localStorage** - Persistência de dados
 
-## React Compiler
+## ✨ Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ✅ Adicionar e remover itens da lista
+- ✅ Marcar itens como concluídos
+- ✅ Campo de preço por item
+- ✅ Cálculo total estimado (rodapé fixo)
+- ✅ Design mobile-first com cores neutras
+- ✅ Persistência localStorage
+- ✅ Estrutura pronta para API futura
 
-## Expanding the ESLint configuration
+## 📱 Design
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Cores neutras (tons de slate)
+- Otimizado para touch
+- Alvos de toque grandes
+- Viewport dinâmico (100dvh)
+- Container máximo de 448px
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Instalação
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/lista-mercado.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Entre na pasta
+cd lista-mercado
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Build para produção
+npm run build
 ```
+
+## 📂 Estrutura do Projeto
+
+```
+src/
+├── components/
+│   └── ShoppingList.tsx    # Componente principal da lista
+├── services/
+│   └── shoppingListService.ts  # Camada de serviço para API
+├── types/
+│   └── index.ts           # Interfaces TypeScript
+├── App.tsx                # Componente principal
+├── index.css              # Estilos globais
+└── main.tsx               # Ponto de entrada
+```
+
+## 🔌 Integração com API
+
+O projeto já possui uma camada de serviço (`services/shoppingListService.ts`) preparada para integração com backend. Para habilitar:
+
+1. Defina a variável de ambiente `VITE_API_URL`
+2. Implemente os endpoints conforme documentação no código
+
+Endpoints esperados:
+- `GET /api/lists` - Listar todas as listas
+- `POST /api/lists` - Criar lista
+- `GET /api/lists/:id` - Obter lista
+- `DELETE /api/lists/:id` - Deletar lista
+- `POST /api/lists/:id/items` - Adicionar item
+- `PATCH /api/lists/:id/items/:itemId` - Atualizar item
+- `DELETE /api/lists/:id/items/:itemId` - Deletar item
+
+## 📄 Licença
+
+MIT
