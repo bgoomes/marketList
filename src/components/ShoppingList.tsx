@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { ShoppingItem, CreateItemDTO } from '../types';
 
 interface ShoppingListProps {
@@ -7,6 +7,7 @@ interface ShoppingListProps {
   onToggleItem: (id: string) => void;
   onDeleteItem: (id: string) => void;
   listName: string;
+  listId: string;
   onUpdateListName: (id: string, name: string) => void;
   onDeleteList: () => void;
 }
@@ -24,6 +25,7 @@ export function ShoppingList({
   onToggleItem, 
   onDeleteItem,
   listName,
+  listId,
   onUpdateListName,
   onDeleteList 
 }: ShoppingListProps) {
@@ -33,6 +35,19 @@ export function ShoppingList({
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(listName);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!listName) {
+      setIsEditingName(true);
+      setEditedName('');
+      setTimeout(() => nameInputRef.current?.focus(), 100);
+    }
+  }, [listId]);
+
+  useEffect(() => {
+    setEditedName(listName);
+  }, [listName]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,10 +78,12 @@ export function ShoppingList({
         {isEditingName ? (
           <div className="flex items-center gap-2">
             <input
+              ref={nameInputRef}
               type="text"
               value={editedName}
               onChange={(e) => setEditedName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+              placeholder="Nome da lista..."
               className="flex-1 px-3 py-2 text-lg font-medium bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400"
               autoFocus
             />

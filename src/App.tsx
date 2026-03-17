@@ -149,6 +149,7 @@ function App() {
             onToggleItem={handleToggleItem}
             onDeleteItem={handleDeleteItem}
             listName={activeList.name}
+            listId={activeListId}
             onUpdateListName={handleUpdateListName}
             onDeleteList={() => handleDeleteList(activeListId)}
           />
