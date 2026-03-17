@@ -12,9 +12,14 @@ export interface ShoppingItem {
 export interface ShoppingList {
   id: string;
   name: string;
-  items: ShoppingItem[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface AppData {
+  lists: ShoppingList[];
+  activeListId: string | null;
+  items: Record<string, ShoppingItem[]>;
 }
 
 export interface CreateItemDTO {
@@ -30,4 +35,12 @@ export interface UpdateItemDTO {
   unit?: string;
   price?: number;
   checked?: boolean;
+}
+
+export interface CreateListDTO {
+  name: string;
+}
+
+export interface UpdateListDTO {
+  name?: string;
 }

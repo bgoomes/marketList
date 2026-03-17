@@ -1,5 +1,12 @@
 # Lista Mercado - Shopping List App
 
+## Branch Strategy
+
+- **main** - Stable/production version (deployed on Vercel)
+- **developer** - All new features and updates (active branch)
+
+> **Important**: All new implementations must be made in the `developer` branch. Merge to `main` only when the feature is stable and ready for production.
+
 ## Overview
 A mobile-first shopping list application built with React, TypeScript, and Tailwind CSS. Designed with neutral colors and optimized for mobile usability.
 
@@ -14,7 +21,8 @@ A mobile-first shopping list application built with React, TypeScript, and Tailw
 ```
 src/
 ├── components/
-│   └── ShoppingList.tsx    # Main shopping list component
+│   ├── ShoppingList.tsx    # Main shopping list component
+│   └── ListNavbar.tsx     # Footer navbar with list tabs
 ├── services/
 │   └── shoppingListService.ts  # API service layer (for future backend integration)
 ├── types/
@@ -29,6 +37,9 @@ src/
 - ✅ Mark items as completed
 - ✅ Price field per item (value per unit)
 - ✅ Total estimate calculation (fixed footer)
+- ✅ Multiple shopping lists (max 4)
+- ✅ Footer navbar with list tabs
+- ✅ Create/edit/delete lists
 - ✅ Mobile-first responsive design
 - ✅ localStorage persistence
 - ✅ Service layer prepared for future API integration
@@ -45,6 +56,19 @@ interface ShoppingItem {
   checked: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+interface ShoppingList {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface AppData {
+  lists: ShoppingList[];
+  activeListId: string | null;
+  items: Record<string, ShoppingItem[]>;
 }
 
 interface CreateItemDTO {
@@ -74,7 +98,10 @@ To enable, set `VITE_API_URL` environment variable.
 - **Max width**: 448px centered container for tablet/desktop
 
 ## Next Steps (Developer Branch)
-- [ ] Add multiple shopping lists support
+
+All features below will be implemented in the `developer` branch:
+
+- [x] Add multiple shopping lists support
 - [ ] Implement backend API integration
 - [ ] Add user authentication
 - [ ] Add item categories
