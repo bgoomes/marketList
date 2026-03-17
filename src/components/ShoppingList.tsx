@@ -65,7 +65,7 @@ export function ShoppingList({
   };
 
   const handleSaveName = () => {
-    onUpdateListName(listName, editedName.trim());
+    onUpdateListName(listId, editedName.trim());
     setIsEditingName(false);
   };
 
