@@ -1,5 +1,12 @@
 # Lista Mercado - Shopping List App
 
+## Branch Strategy
+
+- **main** - Stable/production version (deployed on Vercel)
+- **developer** - All new features and updates (active branch)
+
+> **Important**: All new implementations must be made in the `developer` branch. Merge to `main` only when the feature is stable and ready for production.
+
 ## Overview
 A mobile-first shopping list application built with React, TypeScript, and Tailwind CSS. Designed with neutral colors and optimized for mobile usability.
 
@@ -74,6 +81,9 @@ To enable, set `VITE_API_URL` environment variable.
 - **Max width**: 448px centered container for tablet/desktop
 
 ## Next Steps (Developer Branch)
+
+All features below will be implemented in the `developer` branch:
+
 - [ ] Add multiple shopping lists support
 - [ ] Implement backend API integration
 - [ ] Add user authentication
