@@ -21,7 +21,8 @@ A mobile-first shopping list application built with React, TypeScript, and Tailw
 ```
 src/
 ├── components/
-│   └── ShoppingList.tsx    # Main shopping list component
+│   ├── ShoppingList.tsx    # Main shopping list component
+│   └── ListNavbar.tsx     # Footer navbar with list tabs
 ├── services/
 │   └── shoppingListService.ts  # API service layer (for future backend integration)
 ├── types/
@@ -36,6 +37,9 @@ src/
 - ✅ Mark items as completed
 - ✅ Price field per item (value per unit)
 - ✅ Total estimate calculation (fixed footer)
+- ✅ Multiple shopping lists (max 4)
+- ✅ Footer navbar with list tabs
+- ✅ Create/edit/delete lists
 - ✅ Mobile-first responsive design
 - ✅ localStorage persistence
 - ✅ Service layer prepared for future API integration
@@ -52,6 +56,19 @@ interface ShoppingItem {
   checked: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+interface ShoppingList {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface AppData {
+  lists: ShoppingList[];
+  activeListId: string | null;
+  items: Record<string, ShoppingItem[]>;
 }
 
 interface CreateItemDTO {
@@ -84,7 +101,7 @@ To enable, set `VITE_API_URL` environment variable.
 
 All features below will be implemented in the `developer` branch:
 
-- [ ] Add multiple shopping lists support
+- [x] Add multiple shopping lists support
 - [ ] Implement backend API integration
 - [ ] Add user authentication
 - [ ] Add item categories

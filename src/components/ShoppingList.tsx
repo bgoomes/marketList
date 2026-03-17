@@ -6,6 +6,9 @@ interface ShoppingListProps {
   onAddItem: (item: CreateItemDTO) => void;
   onToggleItem: (id: string) => void;
   onDeleteItem: (id: string) => void;
+  listName: string;
+  onUpdateListName: (id: string, name: string) => void;
+  onDeleteList: () => void;
 }
 
 function formatCurrency(value: number): string {
@@ -15,10 +18,21 @@ function formatCurrency(value: number): string {
   }).format(value);
 }
 
-export function ShoppingList({ items, onAddItem, onToggleItem, onDeleteItem }: ShoppingListProps) {
+export function ShoppingList({ 
+  items, 
+  onAddItem, 
+  onToggleItem, 
+  onDeleteItem,
+  listName,
+  onUpdateListName,
+  onDeleteList 
+}: ShoppingListProps) {
   const [newItemName, setNewItemName] = useState('');
   const [newItemQuantity, setNewItemQuantity] = useState('1');
   const [newItemPrice, setNewItemPrice] = useState('');
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editedName, setEditedName] = useState(listName);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,11 +49,84 @@ export function ShoppingList({ items, onAddItem, onToggleItem, onDeleteItem }: S
     setNewItemPrice('');
   };
 
+  const handleSaveName = () => {
+    onUpdateListName(listName, editedName.trim());
+    setIsEditingName(false);
+  };
+
   const uncheckedItems = items.filter(item => !item.checked);
   const checkedItems = items.filter(item => item.checked);
 
   return (
     <div className="flex flex-col h-full">
+      <div className="p-4 bg-white border-b border-slate-200 flex-shrink-0">
+        {isEditingName ? (
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+              className="flex-1 px-3 py-2 text-lg font-medium bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400"
+              autoFocus
+            />
+            <button
+              onClick={handleSaveName}
+              className="p-2 text-green-600 active:text-green-800"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </button>
+            <button
+              onClick={() => { setIsEditingName(false); setEditedName(listName); }}
+              className="p-2 text-slate-400 active:text-slate-600"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between">
+            <h2 
+              onClick={() => setIsEditingName(true)}
+              className="text-lg font-medium text-slate-700 cursor-pointer hover:text-slate-900"
+            >
+              {listName || 'Sem nome'}
+            </h2>
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="p-2 text-slate-400 active:text-red-500 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        {showDeleteConfirm && (
+          <div className="mt-3 p-3 bg-red-50 rounded-lg border border-red-200">
+            <p className="text-sm text-red-700 mb-2">Excluir esta lista e todos os itens?</p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 py-2 text-sm text-slate-600 bg-white border border-slate-200 rounded-lg active:bg-slate-50"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => { onDeleteList(); setShowDeleteConfirm(false); }}
+                className="flex-1 py-2 text-sm text-white bg-red-500 rounded-lg active:bg-red-600"
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       <form onSubmit={handleSubmit} className="flex gap-2 p-4 bg-white border-b border-slate-200 flex-shrink-0">
         <input
           type="text"
@@ -66,7 +153,7 @@ export function ShoppingList({ items, onAddItem, onToggleItem, onDeleteItem }: S
         />
         <button
           type="submit"
-          className="px-4 py-3 text-white bg-green-700 rounded-lg font-medium active:bg-green-800 transition-colors flex-shrink-0"
+          className="px-4 py-3 text-white bg-green-600 rounded-lg font-medium active:bg-green-700 transition-colors flex-shrink-0"
         >
           +
         </button>
