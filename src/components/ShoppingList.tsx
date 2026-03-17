@@ -66,7 +66,7 @@ export function ShoppingList({ items, onAddItem, onToggleItem, onDeleteItem }: S
         />
         <button
           type="submit"
-          className="px-4 py-3 text-white bg-slate-700 rounded-lg font-medium active:bg-slate-800 transition-colors flex-shrink-0"
+          className="px-4 py-3 text-white bg-green-700 rounded-lg font-medium active:bg-green-800 transition-colors flex-shrink-0"
         >
           +
         </button>
